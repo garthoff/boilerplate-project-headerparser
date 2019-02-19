@@ -25,6 +25,22 @@ app.get("/api/hello", function (req, res) {
 });
 
 
+// your first API endpoint... 
+app.get("/api/whoami", function (req, res) {
+    let user = {
+    agent: req.header('user-agent'), // User Agent we get from headers
+    referrer: req.header('referrer'), //  Likewise for referrer
+    ip: req.header('x-forwarded-for') || req.connection.remoteAddress, // Get IP - allow for proxy
+    lang: req.headers["accept-language"]
+
+    }
+  
+  res.json({"ipaddress":user.ip,"language": user.lang,
+"software":user.agent});
+});
+
+
+
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
